@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <!-- <div class="flex-container l-column-50">
+        <div class="card">
+            <img src="img/1.jpg" alt="">
+        </div>
+        <div class="card">
+            <img src="img/2.jpg" alt="">
+        </div>
+        <div class="card">
+            <img src="img/3.jpg" alt="">
+        </div>
+        <div class="card">
+            <img src="img/4.jpg" alt="">
+        </div>
+        <div class="card">
+            <img src="img/5.jpg" alt="">
+        </div>
+        <div class="card">
+            <img src="img/6.jpg" alt="">
+        </div>
+        <div class="card">
+            <img src="img/7.jpg" alt="">
+        </div>
+        <div class="card">
+            <img src="img/8.jpg" alt="">
+        </div>
+        <div class="card">
+            <img src="img/9.jpg" alt="">
+        </div>
+        <div class="card">
+            <img src="img/10.jpg" alt="">
+        </div>
+    </div> -->
+    <div class="flex-container">
+        <div class="flex-container l-column-33"></div>
+        <div class="flex-container l-column-33"></div>
+        <div class="flex-container l-column-33"></div>
+    </div>
+    <div class="dumping">
+
+    </div>
+    <style>
+        .dumping {
+            visibility: hidden;
+        }
+        .flex-container {
+            display: flex;
+        }
+        .flex-container {
+            display: flex;
+        }
+        .l-column-50 {
+            height: 100vh;
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
+
+        .l-column-33 {
+            height: 100vh;
+            width: 33vw;
+            flex-wrap: wrap;
+            flex-direction: column;
+        }
+
+        .card {
+            width: 25vw;
+        }
+
+        .card img {
+            width: 100%;
+        }
+
+    </style>
+
+    <script>
+    
+        var images = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg", "9.jpg", "10.jpg"]
+        var imgReservoir = [...images]
+        var imgCounter = 0
+        
+        function createImg(source) {
+            let img = document.createElement("img")
+            img.src = source
+            let div = document.createElement("div")
+            div.classList.add("card")
+            div.appendChild(img)
+            return div
+
+        }
+
+        function createImages(images, dir){
+            let imgArr = []
+            images.forEach(src => {
+                imgArr.push(createImg(dir + src))
+            });
+
+            return imgArr
+        }
+
+        function appendImages(imgElements){
+            let imgIndices = []
+            for(let i = imgCounter; i < imgElements.length; i++) {
+                let clientHeight = document.getElementsByClassName("dumping")[0].appendChild(imgElements[i]).clientHeight
+                if(columns.colHeight - columns.col1.totalImgHeight >= clientHeight ){
+                    columns.col1.dom.appendChild(imgElements[i])
+                    columns.col1.totalImgHeight +=  columns.col1.dom.lastChild.clientHeight
+                    imgReservoir[i] = ""
+                }
+                else if(columns.colHeight - columns.col2.totalImgHeight >= clientHeight ){
+                    columns.col2.dom.appendChild(imgElements[i])
+                    columns.col2.totalImgHeight += columns.col2.dom.lastChild.clientHeight
+                    imgReservoir[i] = ""
+                }
+                else if(columns.colHeight - columns.col3.totalImgHeight >= clientHeight ){
+                    columns.col3.dom.appendChild(imgElements[i])
+                    columns.col3.totalImgHeight += columns.col3.dom.lastChild.clientHeight
+                    imgReservoir[i] = ""
+                } 
+            }
+            imgReservoir = imgReservoir.filter((img)=> {
+                debugger
+                if(img !== "") return img
+            })
+        }   
+        let columnElements = document.getElementsByClassName("l-column-33")
+        
+        let columns = {
+            colHeight: columnElements[0].clientHeight,
+            col1: {
+                dom: columnElements[0],
+                images: [],
+                totalImgHeight: 0
+            },
+            col2: {
+                dom: columnElements[1],
+                images: [],
+                totalImgHeight: 0
+            }, 
+            col3: {
+                dom: columnElements[2],
+                images: [],
+                totalImgHeight: 0
+            }
+        }
+        let loaded = createImages(images, "./img/")
+        setTimeout(() => {
+            appendImages(loaded)
+        }, 2000);
+
+        
+    </script>
+</body>
+</html>
